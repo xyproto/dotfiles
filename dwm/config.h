@@ -58,7 +58,6 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_F2,     spawn,          {.v = dmenucmd } }, // alt-f2 for dmenu
 	{ Mod4Mask,                     XK_r,      spawn,          {.v = dmenucmd } }, // super-r for dmenu
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } }, // alt-return for a terminal
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = termcmd } }, // ctrl-alt-r for a terminal
 	{ Mod4Mask,                     XK_l,      spawn,          {.v = lockcmd } }, // super-l for locking
 	{ MODKEY/ControlMask,           XK_l,      spawn,          {.v = lockcmd } }, // ctrl-alt-l for locking
