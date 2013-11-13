@@ -21,9 +21,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       False,       -1 },
+	/* class        instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",       NULL,       NULL,       0,            True,        -1 },
+	{ "Firefox",    NULL,       NULL,       1,            False,       1 },
+	{ "urxvt",      NULL,       NULL,       0,            False,       -1 },
+	{ "claws-mail", NULL,       NULL,       2,            False,       1 },
+	{ "pidgin",     NULL,       NULL,       4,            True,        1 },
+	{ "gedit",      NULL,       NULL,       4,            True,        0 },
+	{ "VirtualBox", NULL,       NULL,       7,            True,        0 },
 };
 
 /* layout(s) */
@@ -53,6 +58,11 @@ static const Layout layouts[] = {
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 static const char *termcmd[]  = { "urxvt", NULL };
 static const char *lockcmd[]  = { "lock", NULL };
+static const char *browsercmd[]  = { "firefox", NULL };
+static const char *emailcmd[]  = { "claws-mail", NULL };
+static const char *alttermcmd[]  = { "gnome-terminal", NULL };
+static const char *clockcmd[]  = { "dwmclock", NULL };
+static const char *sessioncmd[]  = { "xfce4-session", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -60,12 +70,18 @@ static Key keys[] = {
 	{ Mod4Mask,                     XK_r,      spawn,          {.v = dmenucmd } }, // super-r for dmenu
 	{ MODKEY|ControlMask,           XK_r,      spawn,          {.v = termcmd } }, // ctrl-alt-r for a terminal
 	{ Mod4Mask,                     XK_l,      spawn,          {.v = lockcmd } }, // super-l for locking
-	{ MODKEY/ControlMask,           XK_l,      spawn,          {.v = lockcmd } }, // ctrl-alt-l for locking
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_l,      spawn,          {.v = lockcmd } }, // ctrl-alt-l for locking
+	{ MODKEY|ControlMask,           XK_f,      spawn,          {.v = browsercmd } }, // ctrl-alt-f for browser (firefox)
+	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = emailcmd } }, // ctrl-alt-e for email
+	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = alttermcmd } }, // ctrl-alt-return for alternative terminal
+	{ MODKEY|ControlMask,           XK_c,      spawn,          {.v = clockcmd } }, // ctrl-alt-c for clock
+	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v = sessioncmd } }, // ctrl-alt-c for session (xfce4-session)
+	//{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
+	//{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+	//{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	//{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+	//{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,             XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -77,9 +93,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_f,      togglefloating, {0} }, { MODKEY,                       XK_0,      view,           {.ui = ~0 } }, { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
