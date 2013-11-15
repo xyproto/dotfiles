@@ -21,14 +21,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class        instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",       NULL,       NULL,       0,            True,        -1 },
-	{ "Firefox",    NULL,       NULL,       1,            False,       1 },
-	{ "urxvt",      NULL,       NULL,       0,            False,       -1 },
-	{ "claws-mail", NULL,       NULL,       2,            False,       1 },
-	{ "pidgin",     NULL,       NULL,       4,            True,        1 },
-	{ "gedit",      NULL,       NULL,       4,            True,        0 },
-	{ "VirtualBox", NULL,       NULL,       7,            True,        0 },
+	/* class                    instance    title      tags mask     isfloating   monitor */
+	{ "Gimp",                   NULL,       NULL,      (1 << 4),     True,        1 }, // right monitor, tag 5
+	{ "Firefox",                NULL,       NULL,      (1 << 1),     False,       1 }, // right monitor, tag 2
+	{ "urxvt",                  NULL,       NULL,      0,            False,       -1 },
+	{ "Claws-mail",             NULL,       NULL,      (1 << 2),     True,        1 }, // right monitor, tag 3
+	{ "Lotus Notes",            NULL,       NULL,      (1 << 2),     False,       0 }, // left monitor, tag 3
+	{ "NotesLogo",              NULL,       NULL,      (1 << 2),     True,        0 }, // left monitor, tag 3
+	{ "Pidgin",                 NULL,       NULL,      (1 << 4),     True,        1 }, // right monitor, tag 5
+	{ "gedit",                  NULL,       NULL,      (1 << 4),     True,        0 }, // left monitor, tag 5
+	{ "VirtualBox",             NULL,       NULL,      (1 << 7),     True,        0 }, // left monitor, tag 8
+	{ "gvim",                   NULL,       NULL,      0,            False,       -1 },
+	{ "emacs",                  NULL,       NULL,      0,            False,       -1 },
+	{ "libreoffice-writer",     NULL,       NULL,      (1 << 8),     False,       0 }, // left monitor, tag 7
 };
 
 /* layout(s) */
@@ -40,7 +45,7 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "[O]",      monocle },
 };
 
 /* key definitions */
@@ -63,6 +68,7 @@ static const char *emailcmd[]  = { "claws-mail", NULL };
 static const char *alttermcmd[]  = { "gnome-terminal", NULL };
 static const char *clockcmd[]  = { "dwmclock", NULL };
 static const char *sessioncmd[]  = { "xfce4-session", NULL };
+static const char *xkillcmd[]  = { "xkill", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -76,6 +82,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = alttermcmd } }, // ctrl-alt-return for alternative terminal
 	{ MODKEY|ControlMask,           XK_c,      spawn,          {.v = clockcmd } }, // ctrl-alt-c for clock
 	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v = sessioncmd } }, // ctrl-alt-c for session (xfce4-session)
+	{ MODKEY|ControlMask,           XK_u,      quit,           {0} }, // ctrl-alt-u for quitting dwm
 	//{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_o,      focusstack,     {.i = +1 } },
 	//{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -88,6 +95,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_w,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = xkillcmd } },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
