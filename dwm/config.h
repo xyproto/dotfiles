@@ -22,18 +22,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                    instance    title      tags mask     isfloating   monitor */
-	{ "Gimp",                   NULL,       NULL,      (1 << 4),     True,        1 }, // right monitor, tag 5
-	{ "Firefox",                NULL,       NULL,      (1 << 1),     False,       1 }, // right monitor, tag 2
+	{ "Gimp",                   NULL,       NULL,      (1 << 4),     True,        1 }, // left monitor, tag 5
+	{ "Firefox",                NULL,       NULL,      (1 << 1),     False,       0 }, // right monitor, tag 2
 	{ "urxvt",                  NULL,       NULL,      0,            False,       -1 },
-	{ "Claws-mail",             NULL,       NULL,      (1 << 2),     True,        1 }, // right monitor, tag 3
-	{ "Lotus Notes",            NULL,       NULL,      (1 << 2),     False,       0 }, // left monitor, tag 3
-	{ "NotesLogo",              NULL,       NULL,      (1 << 2),     True,        0 }, // left monitor, tag 3
-	{ "Pidgin",                 NULL,       NULL,      (1 << 4),     True,        1 }, // right monitor, tag 5
-	{ "gedit",                  NULL,       NULL,      (1 << 4),     True,        0 }, // left monitor, tag 5
-	{ "VirtualBox",             NULL,       NULL,      (1 << 7),     True,        0 }, // left monitor, tag 8
+	{ "Claws-mail",             NULL,       NULL,      (1 << 2),     True,        0 }, // right monitor, tag 3
+	{ "Lotus Notes",            NULL,       NULL,      (1 << 2),     False,       1 }, // left monitor, tag 3
+	{ "NotesLogo",              NULL,       NULL,      (1 << 2),     True,        1 }, // left monitor, tag 3
+	{ "Pidgin",                 NULL,       NULL,      (1 << 4),     True,        0 }, // right monitor, tag 5
+	{ "gedit",                  NULL,       NULL,      (1 << 4),     True,        1 }, // left monitor, tag 5
+	{ "VirtualBox",             NULL,       NULL,      (1 << 7),     True,        1 }, // left monitor, tag 8
 	{ "gvim",                   NULL,       NULL,      0,            False,       -1 },
 	{ "emacs",                  NULL,       NULL,      0,            False,       -1 },
-	{ "libreoffice-writer",     NULL,       NULL,      (1 << 8),     False,       0 }, // left monitor, tag 7
+	{ "libreoffice-writer",     NULL,       NULL,      (1 << 8),     False,       0 }, // right monitor, tag 7
 };
 
 /* layout(s) */
@@ -61,12 +61,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
+/* static const char *termcmd[]  = { "urxvt", NULL }; */
+static const char *termcmd[]  = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *lockcmd[]  = { "lock", NULL };
 static const char *browsercmd[]  = { "firefox", NULL };
 static const char *emailcmd[]  = { "claws-mail", NULL };
 static const char *alttermcmd[]  = { "gnome-terminal", NULL };
-static const char *clockcmd[]  = { "dwmclock", NULL };
+static const char *startdwmcmd[]  = { "startdwm", NULL };
 static const char *sessioncmd[]  = { "xfce4-session", NULL };
 static const char *xkillcmd[]  = { "xkill", NULL };
 
@@ -80,7 +81,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_f,      spawn,          {.v = browsercmd } }, // ctrl-alt-f for browser (firefox)
 	{ MODKEY|ControlMask,           XK_e,      spawn,          {.v = emailcmd } }, // ctrl-alt-e for email
 	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = alttermcmd } }, // ctrl-alt-return for alternative terminal
-	{ MODKEY|ControlMask,           XK_c,      spawn,          {.v = clockcmd } }, // ctrl-alt-c for clock
+	{ MODKEY|ControlMask,           XK_c,      spawn,          {.v = startdwmcmd } }, // ctrl-alt-s for startdwm
 	{ MODKEY|ControlMask,           XK_x,      spawn,          {.v = sessioncmd } }, // ctrl-alt-c for session (xfce4-session)
 	{ MODKEY|ControlMask,           XK_u,      quit,           {0} }, // ctrl-alt-u for quitting dwm
 	//{ MODKEY,                       XK_b,      togglebar,      {0} },
