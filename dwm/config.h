@@ -22,18 +22,19 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                    instance    title      tags mask     isfloating   monitor */
-	{ "Gimp",                   NULL,       NULL,      (1 << 4),     True,        1 }, // left monitor, tag 5
-	{ "Firefox",                NULL,       NULL,      (1 << 1),     False,       0 }, // right monitor, tag 2
+	{ "Gimp",                   NULL,       NULL,      (1 << 3),     True,        1 }, // right monitor, tag 4
+	{ "Firefox",                NULL,       NULL,      (1 << 1),     False,       1 }, // right monitor, tag 2
 	{ "urxvt",                  NULL,       NULL,      0,            False,       -1 },
-	{ "Claws-mail",             NULL,       NULL,      (1 << 2),     True,        0 }, // right monitor, tag 3
-	{ "Lotus Notes",            NULL,       NULL,      (1 << 2),     False,       1 }, // left monitor, tag 3
-	{ "NotesLogo",              NULL,       NULL,      (1 << 2),     True,        1 }, // left monitor, tag 3
-	{ "Pidgin",                 NULL,       NULL,      (1 << 4),     True,        0 }, // right monitor, tag 5
-	{ "gedit",                  NULL,       NULL,      (1 << 4),     True,        1 }, // left monitor, tag 5
-	{ "VirtualBox",             NULL,       NULL,      (1 << 7),     True,        1 }, // left monitor, tag 8
+	{ "Claws-mail",             NULL,       NULL,      (1 << 2),     True,        1 }, // right monitor, tag 3
+	{ "Lotus Notes",            NULL,       NULL,      (1 << 2),     False,       0 }, // left monitor, tag 3
+	{ "NotesLogo",              NULL,       NULL,      (1 << 2),     True,        0 }, // left monitor, tag 3
+	{ "Pidgin",                 NULL,       NULL,      (1 << 4),     True,        1 }, // right monitor, tag 5
+	{ "Geany",                  NULL,       NULL,      (1 << 4),     True,        0 }, // left monitor, tag 5
+	{ "Oracle VM VirtualBox : 1", NULL,       NULL,      (1 << 7),     True,        0 }, // left monitor, tag 8
+	{ "Oracle VM VirtualBox : 2", NULL,       NULL,      (1 << 7),     True,        1 }, // right monitor, tag 8
 	{ "gvim",                   NULL,       NULL,      0,            False,       -1 },
 	{ "emacs",                  NULL,       NULL,      0,            False,       -1 },
-	{ "libreoffice-writer",     NULL,       NULL,      (1 << 8),     False,       0 }, // right monitor, tag 7
+	{ "libreoffice-writer",     NULL,       NULL,      (1 << 8),     False,       0 }, // left monitor, tag 7
 };
 
 /* layout(s) */
@@ -45,7 +46,7 @@ static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[O]",      monocle },
+	{ "[M]",      monocle },
 };
 
 /* key definitions */
@@ -60,7 +61,8 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
 /* static const char *termcmd[]  = { "urxvt", NULL }; */
 static const char *termcmd[]  = { "gnome-terminal", "--hide-menubar", NULL };
 static const char *lockcmd[]  = { "lock", NULL };
