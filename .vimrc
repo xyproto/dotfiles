@@ -1,4 +1,5 @@
 " Common .vimrc for home, server, work and laptop
+" Alexander F Rødseth <xyproto@archlinux.org>
 " 26.01.2015
 
 set backupdir=~/.backup
@@ -155,6 +156,10 @@ map <F8> :!./compile_and_test.sh<CR>
 
 " Toggle project tree to the left
 map <F12> :NERDTreeToggle<CR>
+
+" Open NERDTree at start, if no filenames are given
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Use the_silver_searcher for searching files
 let g:ackprg = 'ag --nogroup --nocolor --column'

@@ -1,4 +1,5 @@
 " Common .gvimrc for home, server, work and laptop
+" Alexander F Rødseth <xyproto@archlinux.org>
 " 26.01.2015
 
 " File menu
