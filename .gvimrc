@@ -5,76 +5,98 @@
 " File menu
 "set guioptions+=m
 
-" Line numbers
-set number
-
-" Cursorline highlight
-set cul
-
 " No visual bell
 set vb t_vb=""
-
-" No cursor blinking
-set gcr=a:blinkon0
 
 " No toolbars
 set guioptions=aci
 set ghr=0
 
-" --- Color schemes ---
+" No cursor blinking
+set gcr=a:blinkon0
 
-" * Dark schemes, best ones first
-"color ps_color
-"color wintersday
-"color oceanblack
-"color redblack
-"color murphy
-"color torte
-"color dante
-"color af
-" * Medium schemes, best ones first
-color molokai
-"color jellybeans
-"color railscasts
-"color xoria256
-"color desert
-"color zenburn
-"color darkblue2
-"color coffee
-"color tango2
-" * Light schemes, best ones first
-"color tolerable
-"color autumn2
-"color buttercream
-"color professional
-"color default
-"color vc
-"color papayawhip
-"color emacs
-"color peachpuff
-"color taqua
-"color white
-" * Extreme schemes, best ones first
-"color tibet
-"color tomatosoup
+if (match(system("cat /etc/hostname"), "zappix") != -1)
 
-" --- Font settings ---
+  " --- Settings for zappix ---
 
-"set guifont=DejaVu\ Sans\ Mono\ 10
-set guifont=Terminus\ 12
-"set guifont=Monospace\ 7
-"set guifont=Monospace\ 12
-"set guifont=Monospace\ 11
-"set guifont=Monospace\ 10
-"set guifont=Terminus\ Bold\ 15
-"set guifont=Terminus\ Bold\ 20
-"set guifont=Terminus\ Bold\ 14
-"set guifont=Inconsolata\ 15
-"set guifont=Courier\ 10\ Pitch\ 8
-"set guifont=Courier\ 12
-"set guifont=Courier\ 11
-"set guifont=Monospace\ 7
-"set guifont=Monospace\ 12
+  " Line numbers
+  set number
+
+  " Cursorline highlight
+  set cul
+
+  " Color scheme
+  color molokai
+
+  " Font
+  set guifont=Terminus\ 12
+
+  " Airline theme
+  let g:airline_theme='lucious'
+
+else
+
+  " --- Default settings ---
+
+  " --- Color schemes ---
+
+  " * Dark schemes, best ones first
+  "color ps_color
+  "color wintersday
+  "color oceanblack
+  "color redblack
+  "color murphy
+  "color torte
+  "color dante
+  "color af
+  " * Medium schemes, best ones first
+  "color molokai
+  color jellybeans
+  "color railscasts
+  "color xoria256
+  "color desert
+  "color zenburn
+  "color darkblue2
+  "color coffee
+  "color tango2
+  " * Light schemes, best ones first
+  "color tolerable
+  "color autumn2
+  "color buttercream
+  "color professional
+  "color default
+  "color vc
+  "color papayawhip
+  "color emacs
+  "color peachpuff
+  "color taqua
+  "color white
+  " * Extreme schemes, best ones first
+  "color tibet
+  "color tomatosoup
+
+  " --- Font settings ---
+
+  set guifont=DejaVu\ Sans\ Mono\ 10
+  "set guifont=Terminus\ 12
+  "set guifont=Monospace\ 7
+  "set guifont=Monospace\ 12
+  "set guifont=Monospace\ 11
+  "set guifont=Monospace\ 10
+  "set guifont=Terminus\ Bold\ 15
+  "set guifont=Terminus\ Bold\ 20
+  "set guifont=Terminus\ Bold\ 14
+  "set guifont=Inconsolata\ 15
+  "set guifont=Courier\ 10\ Pitch\ 8
+  "set guifont=Courier\ 12
+  "set guifont=Courier\ 11
+  "set guifont=Monospace\ 7
+  "set guifont=Monospace\ 12
+
+  " Airline theme
+  let g:airline_theme='wombat'
+
+endif
 
 " --- Keybindings ---
 

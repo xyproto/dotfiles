@@ -17,7 +17,11 @@ set showcmd
 set t_Co=256
 
 " Printer hostname
-set pdev=mysuperprinter
+if (match(system("cat /etc/hostname"), "zappix") != -1)
+  set pdev=workprinter
+else
+  set pdev=defaultprinter
+endif
 
 " Visual bell
 set vb
@@ -27,7 +31,6 @@ set shm=filnxtToOI
 
 " Prefer UTF-8
 set encoding=utf-8
-
 
 " --- Terminal color schemes ---
 
@@ -88,8 +91,19 @@ command Qa qa
 " Clear highlighting
 map <silent> <bs> :noh<cr>
 
-" Remove all trailing spaces in normal mode
-nmap <silent> <c-bs> :%s/\s\+$//<cr>
+" From http://vim.wikia.com/wiki/Remove_unwanted_spaces
+function! NoTrailingWhitespace()
+  normal mZ
+  let l:chars = col("$")
+  %s/\s\+$//e
+  if (line("'Z") != line(".")) || (l:chars != col("$"))
+    echo "No more trailing whitespace\n"
+  endif
+  normal `Z
+endfunction
+
+" Remove all trailing whitespace, in normal mode
+nmap <silent> <c-up> :call NoTrailingWhitespace()<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>
@@ -166,7 +180,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " Airline
 set laststatus=2
-let g:airline_theme='lucius'
+
+" Airline theme
+let g:airline_theme='wombat'
 
 " old default tab settings for home
 "set ts=8

@@ -104,6 +104,9 @@
 (autoload 'pkgbuild-mode "pkgbuild-mode" "Major mode for editing PKGBUILD files." t nil)
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
+;; Rust
+(require 'rust-mode)
+
 ;; Lisp
 ;; Setup load-path, autoloads and your lisp system
 ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
@@ -124,7 +127,7 @@
 
 ;; --- Text selection ---
 
-;; Friendlier text selection for Arch Linux
+;; Friendlier text selection
 (defun usecua ()
   (cua-mode t)
   (setq cua-auto-tabify-rectangles nil)
