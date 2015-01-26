@@ -15,15 +15,21 @@ set ruler
 set showcmd
 set t_Co=256
 
-" printer hostname
+" Printer hostname
 set pdev=mysuperprinter
 
-if &syntax != 'help'
-  set syntax=help
-endif
+" Visual bell
 set vb
 
-" TODO: Enable railscasts for servers, jellybeans for home and molokai for work
+" Short messages
+set shm=filnxtToOI
+
+" Prefer UTF-8
+set encoding=utf-8
+
+
+" --- Terminal color schemes ---
+
 color jellybeans
 "color railscasts
 "color molokai
@@ -41,8 +47,6 @@ color jellybeans
 "color oceanblack
 "color redblack
 
-" shortmessages
-set shm=filnxtToOI
 
 autocmd FileType go
   \ setlocal shiftwidth=4 |
@@ -54,6 +58,7 @@ autocmd FileType PKGBUILD
 
 imap jj <Esc>
 filetype plugin on
+
 
 " Emacs like Tab behavior
 " http://smalltalk.gnu.org/blog/bonzinip/emacs-ifying-vims-autoindent
@@ -69,6 +74,8 @@ set cinoptions={1s,>2s,e-1s,^-1s,n-1s,:1s,p5,i4,(0,u0,W1s shiftwidth=2
 " Fix for vim scripts that overrides these settings
 autocmd FileType * setlocal indentkeys+=!<Tab>
 
+
+" Syntax completion
 set ofu=syntaxcomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 
@@ -103,6 +110,13 @@ if $TERM =~ '^screen-256color'
   imap [8~ <End>
 endif
 
+if &syntax != 'help'
+  set syntax=help
+endif
+
+" Disable some highlights
+hi clear Todo
+hi clear Note
 
 " Syntastic
 let g:syntastic_check_on_open=1
@@ -115,7 +129,7 @@ let g:syntastic_cpp_compiler='g++'
 let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=['../common']
 
-" I missed these
+" Selecting with shift
 imap <s-end> <esc>v$
 imap <s-home> <esc>v^
 imap <s-up> <esc>vk
@@ -142,9 +156,35 @@ map <F8> :!./compile_and_test.sh<CR>
 " Toggle project tree to the left
 map <F12> :NERDTreeToggle<CR>
 
+" Use the_silver_searcher for searching files
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Airline
+set laststatus=2
+let g:airline_theme='lucius'
+
+" old default tab settings for home
+"set ts=8
+"set softtabstop=4
+"set shiftwidth=4
+
+" old default tab settings for work
+"set tabstop=2
+"set shiftwidth=2
+"set softtabstop=2
+
+" softwrap, for a word-processor-like experience
+"set wrap linebreak textwidth=0
+
+" programming
+"set makeprg=make
+"set errorformat=%f:%l:\ %m
+"set tags=./tags;tags;/
+"let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+
 "TODO: Make a check for if gofmt exists before enabling this,
 "      or every .go file you save will be overwritten by nonsense
-"      for systems that doesn't have gofmt!!!
+"      for systems that doesn't have gofmt!
 "
 "" Indenting for Go (when loading and saving, not <Tab>)
 "" https://github.com/asenchi/dotvim/blob/master/dot.vimrc#L369
