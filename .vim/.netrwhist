@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/etc/modprobe.d'
+let g:netrw_dirhist_2='/home/alexander/go/src/github.com/xyproto/dashboard2/public'
+let g:netrw_dirhist_3='/home/alexander/go/src/github.com/xyproto/go-dry'
+let g:netrw_dirhist_4='/home/alexander/checkout/core/server/studix/manage'
+let g:netrw_dirhist_5='/home/alexander/checkout/core'
+let g:netrw_dirhist_6='/home/alexander/checkout/core/server'
+let g:netrw_dirhist_7='/home/alexander/checkout/core/server/studix'
