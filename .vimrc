@@ -1,6 +1,9 @@
 " Common .vimrc for home, server, work and laptop
 " Alexander F Rødseth <xyproto@archlinux.org>
-" 26.01.2015
+" 05.02.2015
+"
+" Enable UTF-8
+set encoding=utf-8
 
 set backupdir=~/.backup
 set dir=~/.backup
@@ -16,11 +19,27 @@ set ruler
 set showcmd
 set t_Co=256
 
-" Printer hostname
+" Conditional vim+gvim settings
 if (match(system("cat /etc/hostname"), "zappix") != -1)
+  " Printer host
   set pdev=workprinter
+  " Airline theme
+  let g:airline_theme='lucius'
+elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
+  " Printer host
+  set pdev=laptopprinter
+  " Airline theme
+  let g:airline_theme='wombat'
+elseif (match(system("cat /etc/hostname"), "zap") != -1)
+  " Printer host
+  set pdev=homperinter
+  " Airline theme
+  let g:airline_theme='lucius'
 else
-  set pdev=defaultprinter
+  " Printer host
+  set pdev=deafaultprinter
+  " Airline theme
+  let g:airline_theme='wombat'
 endif
 
 " Visual bell
@@ -29,8 +48,6 @@ set vb
 " Short messages
 set shm=filnxtToOI
 
-" Prefer UTF-8
-set encoding=utf-8
 
 " --- Terminal color schemes ---
 
@@ -51,14 +68,21 @@ color jellybeans
 "color oceanblack
 "color redblack
 
+" --- Per filetype spaces and tabs ---
 
 autocmd FileType go
-  \ setlocal shiftwidth=4 |
-  \ setlocal tabstop=4
+  \ setlocal tabstop=4 |
+  \ setlocal shiftwidth=4
 
 autocmd FileType PKGBUILD
+  \ setlocal tabstop=2 |
   \ setlocal shiftwidth=2 |
-  \ setlocal tabstop=2
+  \ setlocal expandtab
+
+autocmd FileType py
+  \ setlocal tabstop=4 |
+  \ setlocal shiftwidth=4 |
+  \ setlocal expandtab
 
 imap jj <Esc>
 filetype plugin on
@@ -83,6 +107,12 @@ autocmd FileType * setlocal indentkeys+=!<Tab>
 set ofu=syntaxcomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 
+" MiniBufExplorer
+" Disable
+let loaded_minibufexplorer = 1
+" 0 for horizontal, >0 for vertical column size
+"let g:miniBufExplVSplit = 12
+
 " Fix typos
 command W w
 command Q q
@@ -104,6 +134,9 @@ endfunction
 
 " Remove all trailing whitespace, in normal mode
 nmap <silent> <c-up> :call NoTrailingWhitespace()<cr>
+
+" Show special characters
+nmap <silent> <c-down> :set list<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>
@@ -133,6 +166,9 @@ endif
 hi clear Todo
 hi clear Note
 
+" Airline
+set laststatus=2
+
 " Syntastic
 let g:syntastic_check_on_open=1
 
@@ -143,6 +179,11 @@ let g:syntastic_c_include_dirs=['../common']
 let g:syntastic_cpp_compiler='g++'
 let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=['../common']
+
+" intel asm syntax by default
+let g:syntastic_asm_dialect='intel'
+let g:syntastic_asm_compiler='nasm'
+"let g:syntastic_asm_compiler='yasm'
 
 " Selecting with shift
 imap <s-end> <esc>v$
@@ -175,14 +216,20 @@ map <F12> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+" Let NERDTree be able to change the directory with C
+let g:NERDTreeChDirMode = 2
+
 " Use the_silver_searcher for searching files
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" Airline
-set laststatus=2
+" Insert a space instead of nobr at <altgr-space>
+imap   <space>
+" Insert a tilde instead of the annoying tilde
+imap ̃  ~
 
-" Airline theme
-let g:airline_theme='wombat'
+" Highlight special characters
+set listchars=nbsp:.,eol:¬,tab:>-,trail:·
+hi SpecialKey term=bold ctermfg=red ctermbg=black guifg=#ff0000 guibg=#000000
 
 " old default tab settings for home
 "set ts=8

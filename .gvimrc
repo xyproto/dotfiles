@@ -15,31 +15,34 @@ set ghr=0
 " No cursor blinking
 set gcr=a:blinkon0
 
+" Cursorline highlight
+set cul
+
+" Conditional gvim settings
 if (match(system("cat /etc/hostname"), "zappix") != -1)
-
-  " --- Settings for zappix ---
-
-  " Line numbers
+  " --- Settings for work ---
+  " Enable line numbers
   set number
-
-  " Cursorline highlight
-  set cul
-
   " Color scheme
   color molokai
-
   " Font
   set guifont=Terminus\ 12
-
-  " Airline theme
-  let g:airline_theme='lucious'
-
+elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
+  " --- Settings for laptop ---
+  " Color scheme
+  color jellybeans
+  " Font
+  set guifont=Monaco\ 10
+elseif (match(system("cat /etc/hostname"), "zap") != -1)
+  " --- Settings for home ---
+  " Color scheme
+  color darkblue2
+  " Font
+  set guifont=Consolas\ 11
 else
-
   " --- Default settings ---
 
   " --- Color schemes ---
-
   " * Dark schemes, best ones first
   "color ps_color
   "color wintersday
@@ -59,6 +62,8 @@ else
   "color darkblue2
   "color coffee
   "color tango2
+  "color oceandeep
+  "color peachpuff
   " * Light schemes, best ones first
   "color tolerable
   "color autumn2
@@ -68,7 +73,6 @@ else
   "color vc
   "color papayawhip
   "color emacs
-  "color peachpuff
   "color taqua
   "color white
   " * Extreme schemes, best ones first
@@ -76,7 +80,6 @@ else
   "color tomatosoup
 
   " --- Font settings ---
-
   set guifont=DejaVu\ Sans\ Mono\ 10
   "set guifont=Terminus\ 12
   "set guifont=Monospace\ 7
@@ -92,10 +95,9 @@ else
   "set guifont=Courier\ 11
   "set guifont=Monospace\ 7
   "set guifont=Monospace\ 12
-
-  " Airline theme
-  let g:airline_theme='wombat'
-
+  "set guifont=Monaco\ 10
+  "set guifont=Consolas\ 11
+  "set guifont=Anonymous\ Pro\ 12
 endif
 
 " --- Keybindings ---
