@@ -135,8 +135,14 @@ endfunction
 " Remove all trailing whitespace, in normal mode
 nmap <silent> <c-up> :call NoTrailingWhitespace()<cr>
 
-" Show special characters
-nmap <silent> <c-down> :set list<cr>
+" Show special characters (toggle)
+nmap <silent> <c-down> :set list!<cr>
+
+" Disable syntax check (toggle)
+nmap <silent> <c-left> :SyntasticToggleMode<cr>
+
+" Enable line numbers (toggle)
+nmap <silent> <c-right> :set number!<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>

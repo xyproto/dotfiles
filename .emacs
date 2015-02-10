@@ -259,3 +259,12 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; --- Make backspace work in viper ---
+; 
+;(defun viper-cua-region-fix()
+;  (define-key viper-vi-global-user-map [backspace] 'backward-delete-char-untabify)
+;  (define-key viper-vi-global-user-map "\C-d" 'delete-char)
+;  (define-key viper-insert-global-user-map [backspace] 'backward-delete-char-untabify)
+;  (define-key viper-insert-global-user-map "\C-d" 'delete-char))
+;
+;(eval-after-load 'viper '(viper-cua-region-fix))
