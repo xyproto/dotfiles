@@ -133,16 +133,19 @@ function! NoTrailingWhitespace()
 endfunction
 
 " Remove all trailing whitespace, in normal mode
-nmap <silent> <c-up> :call NoTrailingWhitespace()<cr>
-
-" Show special characters (toggle)
-nmap <silent> <c-down> :set list!<cr>
+nmap <silent> <c-right> :call NoTrailingWhitespace()<cr>
 
 " Disable syntax check (toggle)
-nmap <silent> <c-left> :SyntasticToggleMode<cr>
+nmap <silent> <c-left> :SyntasticCheck<cr>
 
-" Enable line numbers (toggle)
-nmap <silent> <c-right> :set number!<cr>
+" Next problem
+nmap <silent> <c-down> :lnext<cr>
+
+" Previous problem
+nmap <silent> <c-up> :lprev<cr>
+
+" Enable line Numbers (toggle)
+nmap <silent> <c-n> :set number!<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>
@@ -176,7 +179,14 @@ hi clear Note
 set laststatus=2
 
 " Syntastic
-let g:syntastic_check_on_open=1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 let g:syntastic_c_compiler='gcc'
 let g:syntastic_c_compiler_options=' -std=c11'

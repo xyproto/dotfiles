@@ -114,3 +114,17 @@ map! <S-Insert> <MiddleMouse>
 " nnoremenu 20.360 &Edit.&Paste<Tab>Ctrl-V  "+gP
 " cnoremenu    &Edit.&Paste<Tab>Ctrl-V    <C-R>+
 
+" --- gvim only keybindings ---
+
+" Show Special characters (toggle)
+" ctrl-l is useful for refreshing vim in a terminal, but not so much in gvim
+nmap <silent> <c-l> :set list!<cr>
+imap <silent> <c-l> <c-o>:set list!<cr>
+vmap <silent> <c-l> <esc>:set list!<cr>gv
+
+" Save the file, if needed
+" ctrl-s is already used in a terminal, but available in gvim
+nmap <silent> <c-s> :update<cr>
+imap <silent> <c-s> <c-o>:update<cr>
+vmap <silent> <c-s> <esc>:update<cr>gv
+
