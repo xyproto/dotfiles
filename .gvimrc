@@ -114,3 +114,11 @@ map! <S-Insert> <MiddleMouse>
 " nnoremenu 20.360 &Edit.&Paste<Tab>Ctrl-V  "+gP
 " cnoremenu    &Edit.&Paste<Tab>Ctrl-V    <C-R>+
 
+" --- gvim only keybindings ---
+
+" Save the file, if needed
+" ctrl-s is already used in a terminal, but is available in gvim
+nmap <silent> <c-s> :update<cr>
+imap <silent> <c-s> <c-o>:update<cr>
+vmap <silent> <c-s> <esc>:update<cr>gv
+

@@ -70,18 +70,21 @@ color jellybeans
 
 " --- Per filetype spaces and tabs ---
 
-autocmd FileType go
+autocmd FileType go,sml,hs,lisp,scm
   \ setlocal tabstop=4 |
   \ setlocal shiftwidth=4
 
-autocmd FileType PKGBUILD
-  \ setlocal tabstop=2 |
-  \ setlocal shiftwidth=2 |
+autocmd FileType md,css,py,c,h,pas,hx,cpp,hpp,asm
+  \ setlocal tabstop=4 |
+  \ setlocal shiftwidth=4
   \ setlocal expandtab
 
-autocmd FileType py
-  \ setlocal tabstop=4 |
-  \ setlocal shiftwidth=4 |
+autocmd FileType c,h,pas,asm
+  \ setlocal textwidth=79
+
+autocmd BufRead,BufNewFile PKGBUILD,html,php,js
+  \ setlocal tabstop=2 |
+  \ setlocal shiftwidth=2 |
   \ setlocal expandtab
 
 imap jj <Esc>
@@ -133,16 +136,25 @@ function! NoTrailingWhitespace()
 endfunction
 
 " Remove all trailing whitespace, in normal mode
-nmap <silent> <c-up> :call NoTrailingWhitespace()<cr>
+nmap <silent> <c-bs> :call NoTrailingWhitespace()<cr>
 
-" Show special characters (toggle)
-nmap <silent> <c-down> :set list!<cr>
+" Show Special characters (toggle)
+nmap <silent> <c-right> :set list!<cr>
 
 " Disable syntax check (toggle)
-nmap <silent> <c-left> :SyntasticToggleMode<cr>
+nmap <silent> <c-left> :SyntasticCheck<cr>
 
-" Enable line numbers (toggle)
-nmap <silent> <c-right> :set number!<cr>
+" Disable syntax check (toggle)
+nmap <silent> <c-left> :SyntasticCheck<cr>
+
+" Next problem
+nmap <silent> <c-down> :lnext<cr>
+
+" Previous problem
+nmap <silent> <c-up> :lprev<cr>
+
+" Enable line Numbers (toggle)
+nmap <silent> <c-n> :set number!<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>
@@ -176,7 +188,24 @@ hi clear Note
 set laststatus=2
 
 " Syntastic
-let g:syntastic_check_on_open=1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" The error list at the bottom
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+
+" Automatic checks
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+" Automatically jump to the first error detected
+let g:syntastic_auto_jump = 2
+
+" Python 2 or 3 by default
+"let g:syntastic_python_python_exec='/usr/bin/python'
+let g:syntastic_python_python_exec='/usr/bin/python2'
 
 let g:syntastic_c_compiler='gcc'
 let g:syntastic_c_compiler_options=' -std=c11'
@@ -190,6 +219,14 @@ let g:syntastic_cpp_include_dirs=['../common']
 let g:syntastic_asm_dialect='intel'
 let g:syntastic_asm_compiler='nasm'
 "let g:syntastic_asm_compiler='yasm'
+
+" errors and warnings
+"let g:syntastic_error_symbol = "!>"
+"let g:syntastic_warning_symbol = "?>"
+
+" Only pylint error messages, not warnings. Use [] for everything
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+
 
 " Selecting with shift
 imap <s-end> <esc>v$
@@ -234,7 +271,7 @@ imap   <space>
 imap ̃  ~
 
 " Highlight special characters
-set listchars=nbsp:.,eol:¬,tab:>-,trail:·
+set listchars=nbsp:.,eol:¬,tab:»>,trail:·
 hi SpecialKey term=bold ctermfg=red ctermbg=black guifg=#ff0000 guibg=#000000
 
 " old default tab settings for home
