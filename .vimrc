@@ -68,28 +68,17 @@ color jellybeans
 "color oceanblack
 "color redblack
 
-" --- Per filetype spaces and tabs ---
+" Default tab settings
+set tabstop=4 shiftwidth=4 expandtab
 
-autocmd FileType go,sml,hs,lisp,scm
-  \ setlocal tabstop=4 |
-  \ setlocal shiftwidth=4
-
-autocmd FileType md,css,py,c,h,pas,hx,cpp,hpp,asm
-  \ setlocal tabstop=4 |
-  \ setlocal shiftwidth=4
-  \ setlocal expandtab
-
-autocmd FileType c,h,pas,asm
-  \ setlocal textwidth=79
-
-autocmd BufRead,BufNewFile PKGBUILD,html,php,js
-  \ setlocal tabstop=2 |
-  \ setlocal shiftwidth=2 |
-  \ setlocal expandtab
+" Per filetype settings
+autocmd FileType go,sml,hs,lisp,scm setlocal tabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType md,css,py,c,h,pas,hx,cpp,hpp,asm setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType c,h,pas,asm setlocal textwidth=79
+autocmd FileType PKGBUILD,html,php,js setlocal tabstop=2 shiftwidth=2 expandtab
 
 imap jj <Esc>
 filetype plugin on
-
 
 " Emacs like Tab behavior
 " http://smalltalk.gnu.org/blog/bonzinip/emacs-ifying-vims-autoindent
@@ -136,7 +125,20 @@ function! NoTrailingWhitespace()
 endfunction
 
 " Remove all trailing whitespace, in normal mode
-nmap <silent> <c-bs> :call NoTrailingWhitespace()<cr>
+nmap <c-d> :call NoTrailingWhitespace()<cr>
+imap <c-d> <c-o>:call NoTrailingWhitespace()<cr>
+vmap <c-d> <esc>:call NoTrailingWhitespace()<cr>gv
+
+" Save the file
+nmap <silent> <f2> :w<cr>
+imap <silent> <f2> <c-o>:w<cr>
+vmap <silent> <f2> <esc>:w<cr>gv
+
+" Save the file, if needed
+" ctrl-s is often used by the terminal emulator, but is available in gvim
+nmap <c-s> :update<cr>
+imap <c-s> <c-o>:update<cr>
+vmap <c-s> <esc>:update<cr>gv
 
 " Show Special characters (toggle)
 nmap <silent> <c-right> :set list!<cr>
@@ -249,11 +251,12 @@ map <s-cr> O<esc>
 " for vim and gvim, enter should insert a line below
 map  o<esc>
 
-" TODO: Make this smarter
-map <F8> :!./compile_and_test.sh<CR>
+" TODO: Make ctrl-b build and ctrl-r run projects, in a smart manner
+
+map <F8> :Tlist<cr>
 
 " Toggle project tree to the left
-map <F12> :NERDTreeToggle<CR>
+map <F12> :NERDTreeToggle<cr>
 
 " Open NERDTree at start, if no filenames are given
 autocmd StdinReadPre * let s:std_in=1
@@ -288,10 +291,10 @@ hi SpecialKey term=bold ctermfg=red ctermbg=black guifg=#ff0000 guibg=#000000
 "set wrap linebreak textwidth=0
 
 " programming
-"set makeprg=make
-"set errorformat=%f:%l:\ %m
-"set tags=./tags;tags;/
-"let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+set makeprg=make
+set errorformat=%f:%l:\ %m
+set tags=./tags;tags;/
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 
 "TODO: Make a check for if gofmt exists before enabling this,
 "      or every .go file you save will be overwritten by nonsense
