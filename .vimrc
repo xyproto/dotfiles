@@ -274,7 +274,7 @@ imap   <space>
 imap ̃  ~
 
 " Highlight special characters
-set listchars=nbsp:.,eol:¬,tab:»>,trail:·
+set listchars=nbsp:.,eol:¬,tab:»»,trail:·
 hi SpecialKey term=bold ctermfg=red ctermbg=black guifg=#ff0000 guibg=#000000
 
 " old default tab settings for home
