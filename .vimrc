@@ -324,4 +324,13 @@ let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 "  call cursor(curr, 1)
 "endfunction
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Thanks jschiwal at http://www.linuxquestions.org/questions/debian-26/remember-last-cursor-position-in-vim-552503/
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+
 execute pathogen#infect()

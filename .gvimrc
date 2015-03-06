@@ -36,9 +36,9 @@ elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
 elseif (match(system("cat /etc/hostname"), "zap") != -1)
   " --- Settings for home ---
   " Color scheme
-  color darkblue2
+  color xoria256
   " Font
-  set guifont=Consolas\ 11
+  set guifont=Terminus\ 12
 else
   " --- Default settings ---
 
