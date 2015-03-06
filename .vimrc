@@ -140,14 +140,11 @@ nmap <c-s> :update<cr>
 imap <c-s> <c-o>:update<cr>
 vmap <c-s> <esc>:update<cr>gv
 
-" Show Special characters (toggle)
-nmap <silent> <c-right> :set list!<cr>
+" Perform syntax check
+nmap <silent> <c-right> :SyntasticCheck<cr>
 
-" Disable syntax check (toggle)
-nmap <silent> <c-left> :SyntasticCheck<cr>
-
-" Disable syntax check (toggle)
-nmap <silent> <c-left> :SyntasticCheck<cr>
+" Disable syntax check
+nmap <silent> <c-left> :SyntasticReset<cr>
 
 " Next problem
 nmap <silent> <c-down> :lnext<cr>
@@ -157,6 +154,9 @@ nmap <silent> <c-up> :lprev<cr>
 
 " Enable line Numbers (toggle)
 nmap <silent> <c-n> :set number!<cr>
+
+" Show Special characters (toggle)
+nmap <silent> <c-t> :set list!<cr>
 
 " ctrl-space for backspace. genius! (got the idea from jedit)
 imap <c-space> <bs>

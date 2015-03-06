@@ -113,3 +113,6 @@ map! <S-Insert> <MiddleMouse>
 " aunmenu Edit.Paste
 " nnoremenu 20.360 &Edit.&Paste<Tab>Ctrl-V  "+gP
 " cnoremenu    &Edit.&Paste<Tab>Ctrl-V    <C-R>+
+
+" GO Path when not running from a terminal
+let $GOPATH.='$HOME/go'
