@@ -158,9 +158,6 @@ nmap <silent> <c-n> :set number!<cr>
 " Show Special characters (toggle)
 nmap <silent> <c-t> :set list!<cr>
 
-" ctrl-space for backspace. genius! (got the idea from jedit)
-imap <c-space> <bs>
-
 " space to jump 10 lines down
 nmap <space> 10j
 
@@ -332,5 +329,15 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+" Clipboard
+set clipboard=unnamed
+
+" Use ag for CtrlP
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore .git -g ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 execute pathogen#infect()

@@ -24,7 +24,9 @@ if (match(system("cat /etc/hostname"), "zappix") != -1)
   " Enable line numbers
   set number
   " Color scheme
-  color molokai
+  color seti
+  hi LineNr ctermfg=240 ctermbg=0
+  "color molokai
   " Font
   set guifont=Terminus\ 12
 elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
@@ -118,3 +120,7 @@ map! <S-Insert> <MiddleMouse>
 if ($GOPATH == "")
   let $GOPATH = expand("~/go")
 endif
+"
+" ctrl-space for backspace (Works in gvim, not always in vim. Got the idea from jEdit)
+imap <c-space> <bs>
+
