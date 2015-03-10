@@ -340,4 +340,9 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" Set GOPATH to ~/go, if it's not already set
+if ($GOPATH == "")
+  let $GOPATH = expand("~/go")
+endif
+
 execute pathogen#infect()

@@ -37,16 +37,20 @@ elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
   set guifont=Monaco\ 10
 elseif (match(system("cat /etc/hostname"), "zap") != -1)
   " --- Settings for home ---
+  " Enable line numbers
+  set number
   " Color scheme
-  color xoria256
+  color seti
+  hi LineNr ctermfg=240 ctermbg=0
+  "color xoria256
   " Font
-  set guifont=Terminus\ 12
+  set guifont=DejaVu\ Sans\ Mono\ 11
+  "set guifont=Terminus\ 12
 else
   " --- Default settings ---
 
   " --- Color schemes ---
   " * Dark schemes, best ones first
-  "color ps_color
   "color wintersday
   "color oceanblack
   "color redblack
@@ -54,6 +58,7 @@ else
   "color torte
   "color dante
   "color af
+  "color Mustang
   " * Medium schemes, best ones first
   "color molokai
   color jellybeans
@@ -62,6 +67,7 @@ else
   "color desert
   "color zenburn
   "color darkblue2
+  "color ps_color
   "color coffee
   "color tango2
   "color oceandeep
@@ -116,11 +122,5 @@ map! <S-Insert> <MiddleMouse>
 " nnoremenu 20.360 &Edit.&Paste<Tab>Ctrl-V  "+gP
 " cnoremenu    &Edit.&Paste<Tab>Ctrl-V    <C-R>+
 
-" Set GOPATH to ~/go, if it's not already set
-if ($GOPATH == "")
-  let $GOPATH = expand("~/go")
-endif
-"
 " ctrl-space for backspace (Works in gvim, not always in vim. Got the idea from jEdit)
 imap <c-space> <bs>
-
