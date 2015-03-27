@@ -1,10 +1,8 @@
 " Common .vimrc for home, server, work and laptop
 " Alexander F Rødseth <xyproto@archlinux.org>
-" 05.02.2015
+" 27.03.2015
 "
-" Enable UTF-8
 set encoding=utf-8
-
 set backupdir=~/.backup
 set dir=~/.backup
 syn on
@@ -158,9 +156,6 @@ nmap <silent> <c-n> :set number!<cr>
 " Show Special characters (toggle)
 nmap <silent> <c-t> :set list!<cr>
 
-" ctrl-space for backspace. genius! (got the idea from jedit)
-imap <c-space> <bs>
-
 " space to jump 10 lines down
 nmap <space> 10j
 
@@ -196,14 +191,18 @@ set statusline+=%*
 
 " The error list at the bottom
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 
-" Automatic checks
+" Automatic checks at open and save
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_w = 0
 
 " Automatically jump to the first error detected
-let g:syntastic_auto_jump = 2
+let g:syntastic_auto_jump = 0
+
+" Disable checks everywhere!
+"let g:syntastic_skip_checks = 1
 
 " Python 2 or 3 by default
 "let g:syntastic_python_python_exec='/usr/bin/python'
@@ -332,5 +331,20 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+" Clipboard
+set clipboard=unnamed
+
+" Use ag for CtrlP
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore .git -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+" Set GOPATH to ~/go, if it's not already set
+if ($GOPATH == "")
+  let $GOPATH = expand("~/go")
+endif
 
 execute pathogen#infect()
