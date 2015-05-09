@@ -17,28 +17,11 @@ set ruler
 set showcmd
 set t_Co=256
 
-" Conditional vim+gvim settings
-if (match(system("cat /etc/hostname"), "zappix") != -1)
-  " Printer host
-  set pdev=workprinter
-  " Airline theme
-  let g:airline_theme='lucius'
-elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
-  " Printer host
-  set pdev=laptopprinter
-  " Airline theme
-  let g:airline_theme='wombat'
-elseif (match(system("cat /etc/hostname"), "zap") != -1)
-  " Printer host
-  set pdev=homperinter
-  " Airline theme
-  let g:airline_theme='lucius'
-else
-  " Printer host
-  set pdev=deafaultprinter
-  " Airline theme
-  let g:airline_theme='wombat'
-endif
+" Airline theme
+let g:airline_theme='wombat'
+
+" Printer host
+set pdev=workprinter
 
 " Visual bell
 set vb
@@ -91,7 +74,6 @@ filetype indent on
 set cinoptions={1s,>2s,e-1s,^-1s,n-1s,:1s,p5,i4,(0,u0,W1s shiftwidth=2
 " Fix for vim scripts that overrides these settings
 autocmd FileType * setlocal indentkeys+=!<Tab>
-
 
 " Syntax completion
 set ofu=syntaxcomplete#Complete
