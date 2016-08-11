@@ -2,6 +2,14 @@
 ;; Alexander F Rødseth <xyproto@archlinux.org>
 ;; 26.01.2015
 
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
 ;; --- Looks ---
 
 (defun font-existsp (font)
@@ -105,7 +113,7 @@
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
 ;; Rust
-(require 'rust-mode)
+;;(require 'rust-mode)
 
 ;; Lisp
 ;; Setup load-path, autoloads and your lisp system
@@ -268,3 +276,7 @@
 ;  (define-key viper-insert-global-user-map "\C-d" 'delete-char))
 ;
 ;(eval-after-load 'viper '(viper-cua-region-fix))
+
+;; --- Scratch message ---
+
+(setq initial-scratch-message nil)

@@ -19,7 +19,26 @@ set gcr=a:blinkon0
 set cul
 
 " Conditional gvim settings
-if (match(system("cat /etc/hostname"), "zappix") != -1)
+if (match(system("/bin/hostname"), "default") != -1)
+  " --- Settings for home_pc
+  " Color scheme
+  "color calmar256-light
+  "color tolerable
+  "color xoria256
+  "color railscasts
+  "color molokai
+  color seti
+  " Font
+  set guifont=Consolas\ 10
+  "set guifont=Inconsolata\ 13
+  "set guifont=Monospace\ 10
+  "set guifont=Monospace\ 12
+  "set guifont=Terminus\ 10
+  " No line highlight
+  set cul " highlight row
+  "set cuc " highlight column
+  set number " enable numbers
+elseif (match(system("cat /etc/hostname"), "work") != -1)
   " --- Settings for work ---
   " Enable line numbers
   set number
@@ -29,13 +48,13 @@ if (match(system("cat /etc/hostname"), "zappix") != -1)
   "color molokai
   " Font
   set guifont=Terminus\ 12
-elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
+elseif (match(system("cat /etc/hostname"), "laptop") != -1)
   " --- Settings for laptop ---
   " Color scheme
   color jellybeans
   " Font
   set guifont=Monaco\ 10
-elseif (match(system("cat /etc/hostname"), "zap") != -1)
+elseif (match(system("cat /etc/hostname"), "home") != -1)
   " --- Settings for home ---
   " Enable line numbers
   set number
@@ -46,22 +65,29 @@ elseif (match(system("cat /etc/hostname"), "zap") != -1)
   " Font
   set guifont=DejaVu\ Sans\ Mono\ 11
   "set guifont=Terminus\ 12
+elseif (match(system("/bin/hostname"), "osx") != -1)
+  " --- Settings for osx ---
+  " Color scheme
+  color jellybeans
+  " Font
+  set guifont=Monaco:h13
 else
   " --- Default settings ---
 
   " --- Color schemes ---
   " * Dark schemes, best ones first
-  "color wintersday
+  "color af
   "color oceanblack
+  "color wintersday
   "color redblack
+  "color dante
   "color murphy
   "color torte
-  "color dante
-  "color af
-  "color Mustang
   " * Medium schemes, best ones first
+  color seti
   "color molokai
-  color jellybeans
+  "color Mustang
+  "color jellybeans
   "color railscasts
   "color xoria256
   "color desert
@@ -81,7 +107,6 @@ else
   "color vc
   "color papayawhip
   "color emacs
-  "color taqua
   "color white
   " * Extreme schemes, best ones first
   "color tibet

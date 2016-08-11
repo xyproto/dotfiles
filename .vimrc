@@ -12,16 +12,26 @@ set backspace=indent,eol,start
 set history=50
 set hlsearch
 set incsearch
-set mouse=a
 set ruler
 set showcmd
 set t_Co=256
+let mapleader=","
+let g:EasyMotion_leader_key=","
+
+" Enabling mouse disturbs the X copy/paste functionality
+"set mouse=a
 
 " Airline theme
 let g:airline_theme='wombat'
 
 " Printer host
 set pdev=workprinter
+
+" Conditional vim+gvim settings
+if (match(system("cat /etc/hostname"), "afr_pc") != -1)
+  " Airline theme
+  let g:airline_theme='lucius'
+endif
 
 " Visual bell
 set vb
@@ -32,22 +42,20 @@ set shm=filnxtToOI
 
 " --- Terminal color schemes ---
 
-color jellybeans
+"color zazen
+"color calmar256-light
+"color jellybeans
 "color railscasts
 "color molokai
-"color emacs
-"color adaryn
 "color default
-"color xoria256
+color xoria256
 "color desert
 "color pablo
-"color adaryn
 "color aiseered
-"color relaxedgreen
-"color ps_color
-"color chocolateliquor
-"color oceanblack
-"color redblack
+"color seti
+
+" Highlight current line
+set cursorline
 
 " Default tab settings
 set tabstop=4 shiftwidth=4 expandtab
@@ -72,6 +80,7 @@ filetype indent on
 "set cinoptions=:0,(0,u0,W1s
 " GNU style C indentation
 set cinoptions={1s,>2s,e-1s,^-1s,n-1s,:1s,p5,i4,(0,u0,W1s shiftwidth=2
+
 " Fix for vim scripts that overrides these settings
 autocmd FileType * setlocal indentkeys+=!<Tab>
 
@@ -117,29 +126,30 @@ vmap <silent> <f2> <esc>:w<cr>gv
 " Save the file, if needed
 " ctrl-s is often used by the terminal emulator, but is available in gvim
 nmap <c-s> :update<cr>
-imap <c-s> <c-o>:update<cr>
-vmap <c-s> <esc>:update<cr>gv
+imap <c-s> <esc>:update<cr>
+vmap <c-s> <esc>:update<cr>
+"imap <c-s> <c-o>:update<cr>
+"vmap <c-s> <esc>:update<cr>gv
 
 " Perform syntax check
-nmap <silent> <c-right> :SyntasticCheck<cr>
-
-" Disable syntax check
-nmap <silent> <c-left> :SyntasticReset<cr>
+nmap <silent> <c-left> :SyntasticCheck<cr>
 
 " Next problem
-nmap <silent> <c-down> :lnext<cr>
+nmap <silent> <c-return> :lnext<cr>
 
 " Previous problem
-nmap <silent> <c-up> :lprev<cr>
+nmap <silent> <c-s-return> :lprev<cr>
+
+" Show Special characters (toggle)
+nmap <silent> <c-k> :set list!<cr>
 
 " Enable line Numbers (toggle)
 nmap <silent> <c-n> :set number!<cr>
 
-" Show Special characters (toggle)
-nmap <silent> <c-t> :set list!<cr>
-
 " space to jump 10 lines down
 nmap <space> 10j
+
+" TODO: make vim understand ctrl-arrow keys
 
 " Save files with sudo when started as user (thanks stackoverflow)
 cmap w!! w !sudo tee > /dev/null %
@@ -168,7 +178,7 @@ set laststatus=2
 
 " Syntastic
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%{SyntasticStatuslineFlag()} " Not for nvim
 set statusline+=%*
 
 " The error list at the bottom
@@ -184,24 +194,24 @@ let g:syntastic_check_on_w = 0
 let g:syntastic_auto_jump = 0
 
 " Disable checks everywhere!
-"let g:syntastic_skip_checks = 1
+let g:syntastic_skip_checks = 1
 
 " Python 2 or 3 by default
-"let g:syntastic_python_python_exec='/usr/bin/python'
-let g:syntastic_python_python_exec='/usr/bin/python2'
+let g:syntastic_python_python_exec = '/usr/bin/python'
+"let g:syntastic_python_python_exec = '/usr/bin/python2'
 
-let g:syntastic_c_compiler='gcc'
-let g:syntastic_c_compiler_options=' -std=c11'
-let g:syntastic_c_include_dirs=['../common']
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_compiler_options = ' -std=c11'
+let g:syntastic_c_include_dirs = ['../common']
 
-let g:syntastic_cpp_compiler='g++'
-let g:syntastic_cpp_compiler_options=' -std=c++11'
-let g:syntastic_cpp_include_dirs=['../common']
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = ' -std=c++14'
+let g:syntastic_cpp_include_dirs = ['../common']
 
 " intel asm syntax by default
-let g:syntastic_asm_dialect='intel'
-let g:syntastic_asm_compiler='nasm'
-"let g:syntastic_asm_compiler='yasm'
+let g:syntastic_asm_dialect = 'intel'
+"let g:syntastic_asm_compiler='nasm'
+let g:syntastic_asm_compiler = 'yasm'
 
 " errors and warnings
 "let g:syntastic_error_symbol = "!>"
@@ -209,6 +219,21 @@ let g:syntastic_asm_compiler='nasm'
 
 " Only pylint error messages, not warnings. Use [] for everything
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+
+
+let g:cmake_install_prefix = "./pkg"
+"let g:cmake_install_prefix = "/usr"
+
+let g:cmake_build_type = "Release"
+"let g:cmake_build_type = "Debug"
+
+let g:cmake_cxx_compiler = "clang++"
+"let g:cmake_cxx_compiler = "g++"
+
+let g:cmake_c_compiler = "clang"
+"let g:cmake_c_compiler = "gcc"
+
+let g:cmake_build_shared_libs = "on"
 
 
 " Selecting with shift
@@ -234,14 +259,19 @@ map  o<esc>
 
 " TODO: Make ctrl-b build and ctrl-r run projects, in a smart manner
 
-map <F8> :Tlist<cr>
+" Run cman on the current word
+map <F1> :!~/.bin/cman <cword><cr>
 
 " Toggle project tree to the left
-map <F12> :NERDTreeToggle<cr>
+map <F8> :NERDTreeToggle<cr>
 
+" Toggle C-tags list to the left
+map <F12> :Tlist<cr>
+
+" Not for nvim
 " Open NERDTree at start, if no filenames are given
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Let NERDTree be able to change the directory with C
 let g:NERDTreeChDirMode = 2
@@ -315,7 +345,7 @@ autocmd BufReadPost *
   \ endif
 
 " Clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " Use ag for CtrlP
 if executable('ag')
@@ -327,6 +357,11 @@ endif
 " Set GOPATH to ~/go, if it's not already set
 if ($GOPATH == "")
   let $GOPATH = expand("~/go")
+endif
+
+" Use a completely different color theme when running vim as root
+if ($USER == "root")
+  color tomatosoup
 endif
 
 execute pathogen#infect()
