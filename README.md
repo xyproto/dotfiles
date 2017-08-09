@@ -1,9 +1,8 @@
 # dotfiles
 
 My current configuration for:
-* vim
-* gvim
-* dwm
-* emacs
+* vim (nvim)
+* emacs (spacemacs)
+* zsh
 
 The editor configurations require that `~/.backup` is present.
