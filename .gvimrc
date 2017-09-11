@@ -19,8 +19,8 @@ set gcr=a:blinkon0
 set cul
 
 " Conditional gvim settings
-if (match(system("/bin/hostname"), "default") != -1)
-  " --- Settings for home_pc
+if (match(system("/bin/hostname"), "afr_pc") != -1)
+  " --- Settings for afr_pc
   " Color scheme
   "color calmar256-light
   "color tolerable
@@ -29,7 +29,7 @@ if (match(system("/bin/hostname"), "default") != -1)
   "color molokai
   color seti
   " Font
-  set guifont=Consolas\ 10
+  set guifont=Consolas\ 12
   "set guifont=Inconsolata\ 13
   "set guifont=Monospace\ 10
   "set guifont=Monospace\ 12
@@ -38,7 +38,7 @@ if (match(system("/bin/hostname"), "default") != -1)
   set cul " highlight row
   "set cuc " highlight column
   set number " enable numbers
-elseif (match(system("cat /etc/hostname"), "work") != -1)
+elseif (match(system("cat /etc/hostname"), "zappix") != -1)
   " --- Settings for work ---
   " Enable line numbers
   set number
@@ -48,13 +48,13 @@ elseif (match(system("cat /etc/hostname"), "work") != -1)
   "color molokai
   " Font
   set guifont=Terminus\ 12
-elseif (match(system("cat /etc/hostname"), "laptop") != -1)
+elseif (match(system("cat /etc/hostname"), "zaptop") != -1)
   " --- Settings for laptop ---
   " Color scheme
   color jellybeans
   " Font
   set guifont=Monaco\ 10
-elseif (match(system("cat /etc/hostname"), "home") != -1)
+elseif (match(system("cat /etc/hostname"), "zap") != -1)
   " --- Settings for home ---
   " Enable line numbers
   set number
@@ -65,8 +65,8 @@ elseif (match(system("cat /etc/hostname"), "home") != -1)
   " Font
   set guifont=DejaVu\ Sans\ Mono\ 11
   "set guifont=Terminus\ 12
-elseif (match(system("/bin/hostname"), "osx") != -1)
-  " --- Settings for osx ---
+elseif (match(system("/bin/hostname"), "minizap") != -1)
+  " --- Settings for mac mini ---
   " Color scheme
   color jellybeans
   " Font
