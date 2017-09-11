@@ -93,15 +93,20 @@ alias lc="lq"
 alias sl="ls"
 if [ -e /usr/bin/exa ]; then
   alias ls="exa -F"
-  alias lsd="exa -als modified"
-  alias lss="exa -als size"
+  alias lsl="exa -al --git"
+  alias lsd="exa -als modified --git"
+  alias lss="exa -als size --git"
   alias k="exa -F | grep '\*' | sed 's/\*$//'"
   alias tree="exa -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+  alias ftop="watch --differences -n 5 'df; exa -Flas modified;'"
+  alias dir="exa -al"
 else
   alias ls="ls --color=auto -N -F"
+  alias lsl="ls -al"
   alias lsd="ls -ralt"
   alias lss="ls -ralS"
   alias k="ls -F | grep '\*' | sed 's/\*$//'"
+  alias dir="ls -al"
 fi
 
 ## Fix for æøå on some terminals
@@ -109,7 +114,6 @@ alias engelsk="export LC_ALL=en_US.UTF-8"
 
 ## DOS nostalgia
 alias cd..="cd .."
-alias dir="exa -al"
 alias cls="clear"
 alias md='mkdir -p'
 alias move="mv -i"
@@ -121,6 +125,9 @@ alias rd='rmdir'
 alias ubuntu="ssh ubuntu"
 alias am="mosh --ssh=\"ssh -C -p2223\" alexander@archlinux.no"
 alias appear="ssh -p2022 afr@appeartv.net"
+
+alias synne="ponysay Synne er best"
+alias vilde="ponysay Vilde er best"
 
 ## Searching for stuff
 alias grep="grep --color=auto"
@@ -190,7 +197,6 @@ alias unlockchroot="sudo find /var/lib/archbuild -name db.lck -delete"
 # Processes, monitoring and watch
 alias is="ps ux | grep"
 alias pso="ps auxww"
-alias ftop="watch --differences -n 5 'df; exa -Flas modified;'"
 alias lps="ps -e -orss=,args=|sort -b -k1,1n|pr -TW$COLUMNS|grep -v '0 \['"
 
 ## Dealing with documents and text files
@@ -211,13 +217,23 @@ alias fuserumountall='for mnt in `mount | grep fuse | cut -d" " -f3`; do fusermo
 alias sshfsumount="fusermount -u"
 
 ## Source control, version control, git, svn
-alias gpush="git push"
-alias gpull="git pull"
-alias gitst="git status -sb"
-alias gitls="git remote -v"
+alias fetch="git fetch origin"
+alias newbranch="git checkout -b"
+alias status="git status -sb"
+alias remotes="git remote -v"
+alias branches="git branch -a"
+alias rebase="git rebase origin/master"
+
 # Show the latest git hash for the current pkgver git tag for the PKGBUILD in the current directory, if available
-alias latest_tags='git ls-remote --tags $(grep source= PKGBUILD | cut -d\" -f2 | cut -d\# -f1 | cut -d+ -f2 | sed "s/\$pkgname/$(grep pkgname= PKGBUILD | cut -d= -f2)/g")'
-alias latest_tag='latest_tags | tail -1'
+alias git_latest_tags='git ls-remote --tags $(grep source= PKGBUILD | cut -d\" -f2 | cut -d\# -f1 | cut -d+ -f2 | sed "s/\$pkgname/$(grep pkgname= PKGBUILD | cut -d= -f2)/g")'
+alias git_latest_tags='git ls-remote --tags $(grep source= PKGBUILD | cut -d\" -f2 | cut -d\# -f1 | cut -d+ -f2 | sed "s/\$pkgname/$(grep pkgname= PKGBUILD | cut -d= -f2)/g") | tail -1'
+alias git_deleted="git log --diff-filter=D --summary \$(git rev-list --max-parents=0 HEAD | head -1)..HEAD | egrep -o '*[[:alnum:]]*(/[[:alnum:].]*)+$'"
+alias git_submodule_reset="git submodule deinit -f .; git submodule update --init"
+
+# ADM
+alias search='ag --ignore "kernel/*" --ignore "stapi/*"'
+
+# svn
 alias modified='svn st | grep "^M"'
 
 ## Paths and files
@@ -534,6 +550,8 @@ setopt share_history # share command history data
 #
 # More comfortable
 # umask 022
+
+alias rmlock="ssh asio@10.10.15.30 '[ -f /tmp/locked ] && su root -c \"rm /tmp/locked && echo lock removed\" || echo no lock'; ssh asio@10.10.15.30 '[ -f /tmp/image ] && su root -c \"umount /tmp/image && rmdir /tmp/image && echo mount removed\" || echo no mount'"
 
 # A compromise (http://goo.gl/FCvdQ9)
 umask 027
