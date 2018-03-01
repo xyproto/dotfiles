@@ -1,7 +1,7 @@
-" Common .vimrc for home, server, work and laptop
-" Alexander F Rødseth <xyproto@archlinux.org>
-" 27.03.2015
-"
+" Author: Alexander F Rødseth <xyproto@archlinux.org>
+" Modified: 2018-03-01
+" License: MIT
+
 set encoding=utf-8
 set backupdir=~/.backup
 set dir=~/.backup
@@ -17,22 +17,16 @@ set showcmd
 set t_Co=256
 let mapleader=","
 let g:EasyMotion_leader_key=","
-set pastetoggle=<F11>
+set pastetoggle=<F1>
 
 " Enabling mouse disturbs the X copy/paste functionality
 "set mouse=a
 
-" Airline theme
-let g:airline_theme='wombat'
-
 " Printer host
-set pdev=workprinter
+"set pdev=workprinter
 
-" Conditional vim+gvim settings
-if (match(system("cat /etc/hostname"), "afr_pc") != -1)
-  " Airline theme
-  let g:airline_theme='lucius'
-endif
+" Default Airline theme
+let g:airline_theme='distinguished'
 
 " Visual bell
 set vb
@@ -40,37 +34,27 @@ set vb
 " Short messages
 set shm=filnxtToOI
 
-
 " --- Terminal color schemes ---
 
-"color zazen
-"color pablo
-"color aiseered
-"color redblack
-"color desert
-"color jellybeans
-"color railscasts
-"color molokai
-"color default
-color xoria256
-"color seti
-"color calmar256-light
+color jellybeans
 
 " Highlight current line
 set cursorline
 
 " Default tab settings
-set tabstop=4 shiftwidth=4 expandtab
+set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 " Per filetype settings
-autocmd FileType go,sml,hs,lisp,scm setlocal tabstop=4 shiftwidth=4 noexpandtab
-autocmd FileType md,css,py,c,h,pas,hx,cpp,hpp,asm setlocal tabstop=4 shiftwidth=4 expandtab
-autocmd FileType c,h,pas,asm setlocal textwidth=79
-autocmd FileType PKGBUILD,html,php,js setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd FileType go,sml,hs,lisp,scm,ml setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType cpp,hpp,cc,h,cxx setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2 textwidth=99
+autocmd FileType c,pas,asm setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4 textwidth=79
+autocmd FileType html,css,php,js,hx,ts setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2 textwidth=99
+autocmd FileType PKGBUILD,sh,bash,ksh,csh,tcsh,fish setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2 textwidth=79
+autocmd FileType md setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 textwidth=99
 
+" Movement
 imap jj <Esc>
 imap jk <Esc>
-filetype plugin on
 
 " Emacs like Tab behavior
 " http://smalltalk.gnu.org/blog/bonzinip/emacs-ifying-vims-autoindent
@@ -79,10 +63,13 @@ set indentkeys=!<Tab>,o,O
 map <Tab> i<Tab><Esc>^
 map <S-Tab> <<
 filetype indent on
+
 " Kernel style C indentation
 "set cinoptions=:0,(0,u0,W1s
 " GNU style C indentation
 set cinoptions={1s,>2s,e-1s,^-1s,n-1s,:1s,p5,i4,(0,u0,W1s shiftwidth=2
+
+filetype plugin on
 
 " Fix for vim scripts that overrides these settings
 autocmd FileType * setlocal indentkeys+=!<Tab>
@@ -92,17 +79,21 @@ set ofu=syntaxcomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 
 " MiniBufExplorer
-" Disable
-let loaded_minibufexplorer = 1
+let loaded_minibufexplorer = 0
+
 " 0 for horizontal, >0 for vertical column size
 "let g:miniBufExplVSplit = 12
+
+" No tab line
+let g:showtabline = 0
+let g:airline#extensions#tabline#enabled = 0
 
 " Fix typos
 command W w
 command Q q
 command Qa qa
 
-" Clear highlighting
+" Clear search highlighting with backspace in normal mode
 map <silent> <bs> :noh<cr>
 
 " From http://vim.wikia.com/wiki/Remove_unwanted_spaces
@@ -121,13 +112,14 @@ nmap <c-d> :call NoTrailingWhitespace()<cr>
 imap <c-d> <c-o>:call NoTrailingWhitespace()<cr>
 vmap <c-d> <esc>:call NoTrailingWhitespace()<cr>gv
 
-" Save the file
-nmap <silent> <f2> :w<cr>
-imap <silent> <f2> <c-o>:w<cr>
-vmap <silent> <f2> <esc>:w<cr>gv
+" Quick save with F2
+"nmap <silent> <f2> :w<cr>
+"imap <silent> <f2> <c-o>:w<cr>
+"vmap <silent> <f2> <esc>:w<cr>gv
 
 " Save the file, if needed
-" ctrl-s is often used by the terminal emulator, but is available in gvim
+" ctrl-s is often taken by the terminal emulator,
+" but is available in gvim/nvim-qt
 nmap <c-s> :update<cr>
 imap <c-s> <esc>:update<cr>
 vmap <c-s> <esc>:update<cr>
@@ -135,13 +127,13 @@ vmap <c-s> <esc>:update<cr>
 "vmap <c-s> <esc>:update<cr>gv
 
 " Perform syntax check
-nmap <silent> <c-left> :SyntasticCheck<cr>
-
-" Next problem
-nmap <silent> <c-return> :lnext<cr>
+nmap <silent> <c-return> :SyntasticCheck<cr>
 
 " Previous problem
-nmap <silent> <c-s-return> :lprev<cr>
+nmap <silent> <c-pageup> :lprev<cr>
+
+" Next problem
+nmap <silent> <c-pagedown> :lnext<cr>
 
 " Show Special characters (toggle)
 nmap <silent> <c-k> :set list!<cr>
@@ -152,7 +144,8 @@ nmap <silent> <c-n> :set number!<cr>
 " space to jump 10 lines down
 nmap <space> 10j
 
-" TODO: make vim understand ctrl-arrow keys
+" build Go projects
+map <c-b> :GoBuild<cr>
 
 " Save files with sudo when started as user (thanks stackoverflow)
 cmap w!! w !sudo tee > /dev/null %
@@ -181,7 +174,7 @@ set laststatus=2
 
 " Syntastic
 set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()} " Not for nvim
+"set statusline+=%{SyntasticStatuslineFlag()} " Not for neovim
 set statusline+=%*
 
 " The error list at the bottom
@@ -191,25 +184,26 @@ let g:syntastic_auto_loc_list = 0
 " Automatic checks at open and save
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_check_on_w = 0
+
+let g:syntastic_quiet_messages = {
+    \ "!level": "errors",
+    \ "regex":  [ 'RESOURCEDIR', 'DATADIR', 'IMGDIR', 'SHADERDIR', 'expected .*).* before string constant' ] }
 
 " Automatically jump to the first error detected
 let g:syntastic_auto_jump = 0
 
-" Disable checks everywhere!
-let g:syntastic_skip_checks = 1
+" Python 3 by default
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 
-" Python 2 or 3 by default
-let g:syntastic_python_python_exec = '/usr/bin/python'
-"let g:syntastic_python_python_exec = '/usr/bin/python2'
-
+" C11 by default
 let g:syntastic_c_compiler = 'gcc'
 let g:syntastic_c_compiler_options = ' -std=c11'
-let g:syntastic_c_include_dirs = ['../common']
+let g:syntastic_c_include_dirs = ['../common', './common', '../include', './include']
 
+" C++17 by default
 let g:syntastic_cpp_compiler = 'g++'
-let g:syntastic_cpp_compiler_options = ' -std=c++14'
-let g:syntastic_cpp_include_dirs = ['../common']
+let g:syntastic_cpp_compiler_options = ' -std=c++17'
+let g:syntastic_cpp_include_dirs = ['../common', './common', '../include', './include']
 
 " intel asm syntax by default
 let g:syntastic_asm_dialect = 'intel'
@@ -223,21 +217,20 @@ let g:syntastic_asm_compiler = 'yasm'
 " Only pylint error messages, not warnings. Use [] for everything
 let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 
-
-let g:cmake_install_prefix = "./pkg"
-"let g:cmake_install_prefix = "/usr"
+" CMake
+let g:cmake_install_prefix = "../inst"
+let g:cmake_build_shared_libs = "on"
 
 let g:cmake_build_type = "Release"
 "let g:cmake_build_type = "Debug"
 
-let g:cmake_cxx_compiler = "clang++"
-"let g:cmake_cxx_compiler = "g++"
+" GCC
+let g:cmake_c_compiler = "gcc"
+let g:cmake_cxx_compiler = "g++"
 
-let g:cmake_c_compiler = "clang"
-"let g:cmake_c_compiler = "gcc"
-
-let g:cmake_build_shared_libs = "on"
-
+" Clang
+"let g:cmake_c_compiler = "clang"
+"let g:cmake_cxx_compiler = "clang++"
 
 " Selecting with shift
 imap <s-end> <esc>v$
@@ -255,15 +248,10 @@ vmap <s-down> j
 
 " for vim, shift-enter should instert a line above
 map OM O<esc>
-" for gvim, shift-enter should insert a line above
+" for nvim-qt, shift-enter should insert a line above
 map <s-cr> O<esc>
-" for vim and gvim, enter should insert a line below
+" for vim and nvim-qt, enter should insert a line below
 map  o<esc>
-
-" TODO: Make ctrl-b build and ctrl-r run projects, in a smart manner
-
-" Run cman on the current word
-map <F1> :!~/.bin/cman <cword><cr>
 
 " Toggle project tree to the left
 map <F8> :NERDTreeToggle<cr>
@@ -288,16 +276,6 @@ imap ̃  ~
 set listchars=nbsp:.,eol:¬,tab:»»,trail:·
 hi SpecialKey term=bold ctermfg=red ctermbg=black guifg=#ff0000 guibg=#000000
 
-" old default tab settings for home
-"set ts=8
-"set softtabstop=4
-"set shiftwidth=4
-
-" old default tab settings for work
-"set tabstop=2
-"set shiftwidth=2
-"set softtabstop=2
-
 " softwrap, for a word-processor-like experience
 "set wrap linebreak textwidth=0
 
@@ -308,39 +286,12 @@ let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 
 " to generate tag file: cd ~/clones; ctags -R dirname
 set tags=./tags;/,tags;/;~/clones/tags
+
 " ctrl-g to jump to def, ctrl-t to jump back
 map <c-g> :execute "tjump " . expand("<cword>")<cr>
 
 " autocomplete with ctrl-space instead of ctrl-x ctrl-o
 inoremap <c-space> <c-x><c-o>
-
-"TODO: Make a check for if gofmt exists before enabling this,
-"      or every .go file you save will be overwritten by nonsense
-"      for systems that doesn't have gofmt!
-"
-"" Indenting for Go (when loading and saving, not <Tab>)
-"" https://github.com/asenchi/dotvim/blob/master/dot.vimrc#L369
-"" golang has a formatting tool to standardize the way code is formatted.
-"" Read the comments for an explanation:
-"if has('autocmd')
-"  augroup gofmtBuffer
-"  au!
-"  " Convert tabs to spaces when we open the file
-"  autocmd BufReadPost *.go retab!
-"  autocmd BufWritePre *.go :call GoFormatBuffer()
-"  " Convert tabs to spaces after we reformat and save the file
-"  autocmd BufWritePost *.go retab!
-"  augroup END
-"endif
-"
-"function! GoFormatBuffer()
-"  " Save our current position
-"  let curr=line(".")
-"  " Run gofmt
-"  %!${GOROOT}/bin/gofmt
-"  " Return to our saved position
-"  call cursor(curr, 1)
-"endfunction
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
@@ -361,20 +312,86 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" Set GOPATH to ~/go, if it's not already set
-"if ($GOPATH == "")
-"  let $GOPATH = expand("~/go")
-"endif
-
 " Use a completely different color theme when running vim as root
-if ($USER == "root")
-  color tomatosoup
-endif
+"if ($UID == 0)
+"  color tomatosoup
+"endif
 
 map Q <Nop>
 
+" Typos
 command Wq :wq
 
+" Sort list of words
 vnoremap <F2> d:execute 'normal i' . join(sort(split(getreg('"'))), ' ')<CR>
 
-execute pathogen#infect()
+" Plugins with junegunn/vim-plug
+call plug#begin('~/.config/nvim/plugged')
+
+" Make sure to use single quotes
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Clojure
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Go
+Plug 'fatih/vim-go', { 'tag': '*' }
+Plug 'nsf/gocode', { 'tag': 'v.20170907', 'rtp': 'vim' }
+
+" Syntax checking
+Plug 'vim-syntastic/syntastic'
+"Plug 'neomake/neomake'
+
+" Fuzzy finder. Plugin outside the plugged directory, with a post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Color schemes
+Plug 'junegunn/seoul256.vim'
+Plug 'trusktr/seti.vim'
+Plug 'tomasr/molokai'
+Plug 'croaker/mustang-vim'
+
+" Syntax highlighting
+Plug 'Firef0x/PKGBUILD.vim'
+Plug 'kergoth/vim-bitbake'
+
+" Look'n'feel
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'kien/rainbow_parentheses.vim'
+
+" Eastereggs
+Plug 'idanarye/vim-smile', { 'on': 'Smile' }
+
+" Git
+Plug 'tpope/vim-fugitive'
+
+" Motion
+Plug 'easymotion/vim-easymotion'
+
+" Comments
+Plug 'tpope/vim-commentary'
+
+call plug#end()
+
+map <c-up> :cp<cr>
+map <c-down> :cn<cr>
+
+" These will be overwritten by the GUI version of nvim
+" F1 is paste toggle
+" F2 is sort list of words
+map <silent> <F3> :color autumn<cr>:AirlineTheme minimalist<cr>:set nocul<cr>:syntax off<cr>
+map <silent> <F4> :syntax off<cr>:color redblack<cr>:syntax on<cr>:AirlineTheme atomic<cr>:color redblack<cr>:set nocul<cr>
+map <silent> <F5> :color pablo<cr>:AirlineTheme jellybeans<cr>:set nocul<cr>:syntax on<cr>
+map <silent> <F6> :color zenburn<cr>:AirlineTheme zenburn<cr>:set cul<cr>:syntax on<cr>
+map <silent> <F7> :color seoul256-light<cr>:AirlineTheme sol<cr>:set cul<cr>:syntax on<cr>
+" F8 is nerdtree
+map <silent> <F9> :set background=dark<cr>:color xoria256<cr>:AirlineTheme sol<cr>:set cul<cr>:syntax on<cr>:RainbowParenthesesToggle<cr>
+map <silent> <F10> :set background=dark<cr>:color railscasts<cr>:AirlineTheme sierra<cr>:set cul<cr>:syntax on<cr>
+map <silent> <F11> :color calmar256-light<cr>:AirlineTheme sol<cr>:set nocul<cr>:syntax on<cr>:RainbowParenthesesToggle<cr>
+map <silent> <F12> :color seti<cr>:AirlineTheme distinguished<cr>:set cul<cr>:syntax on<cr>
+
+" neomake
+"call neomake#configure#automake('nw', 750)

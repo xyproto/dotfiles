@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/Users/alexander/clones/calibre-python3/build'
+let g:netrw_dirhist_2='/Users/alexander/cppprojects/simple/string'
+let g:netrw_dirhist_3='/Users/alexander/clones/sakemake/examples/gtk3'
+let g:netrw_dirhist_4='/Users/alexander/clones/sakemake/examples/hello/include'

@@ -1,8 +1,12 @@
 # dotfiles
 
 My current configuration for:
-* vim (nvim)
-* emacs (spacemacs)
-* zsh
 
-The editor configurations require that `~/.backup` is present.
+* NeoViM
+* ZSH
+* Tig
+* Tmux
+
+The editor configuration require that `~/.backup` is present.
+
+License: MIT
